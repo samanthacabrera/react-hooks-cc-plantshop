@@ -12,7 +12,7 @@ function PlantCard({ plant, markSoldOut }) {
   };
 
   return (
-    <div className="plant-card">
+    <div className="card">
       <img src={plant.image} alt={plant.name} />
       <h2>{plant.name}</h2>
       <p>${plant.price}</p>
