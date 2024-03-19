@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
-function PlantCard() {
+function PlantCard({ plant, markSoldOut }) {
+  // State that keeps track of whether plant is sold out or not
+  const [isSoldOut, setIsSoldOut] = useState(false);
+
+  const handleSoldOutClick = () => {
+    // Toggle isSoldOut state
+    setIsSoldOut(prevState => !prevState); 
+    // Pass current plant id to markSoldOut()
+    markSoldOut(plant.id, !isSoldOut); 
+  };
+
   return (
-    <li className="card" data-testid="plant-item">
-      <img src={"https://via.placeholder.com/400"} alt={"plant name"} />
-      <h4>{"plant name"}</h4>
-      <p>Price: {"plant price"}</p>
-      {true ? (
-        <button className="primary">In Stock</button>
-      ) : (
-        <button>Out of Stock</button>
+    <div className="plant-card">
+      <img src={plant.image} alt={plant.name} />
+      <h2>{plant.name}</h2>
+      <p>${plant.price}</p>
+      {/*Render button if plant is in stock */}
+      {!isSoldOut && (
+        <button onClick={handleSoldOutClick} style={{ backgroundColor: 'green' }}>
+          In Stock
+        </button>
       )}
-    </li>
-  );
+      {/*Render button if plant is out of stock */}
+      {isSoldOut && (
+        <button onClick={handleSoldOutClick} style={{ backgroundColor: 'gray' }}>
+          Out of Stock
+        </button>
+      )}
+    </div>
+  )
 }
 
-export default PlantCard;
+export default PlantCard
